@@ -1,8 +1,9 @@
 <?php
 
+use App\Livewire\Index;
+use App\Livewire\TestButton;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    $num = session('num');
-    return view('welcome')->with('num', $num);
-});
+
+Route::get('/', Index::class);
+Route::get('/test', TestButton::class);
