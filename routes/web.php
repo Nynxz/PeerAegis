@@ -3,5 +3,6 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    $num = session('num');
+    return view('welcome')->with('num', $num);
 });
