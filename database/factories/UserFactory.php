@@ -2,11 +2,11 @@
 
 namespace Database\Factories;
 
-use App\Models\Student;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
-class StudentFactory extends Factory
+class UserFactory extends Factory
 {
 
     public function definition(): array

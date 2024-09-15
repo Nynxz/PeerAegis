@@ -1,3 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+/* width */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+/* Track  https://www.geeksforgeeks.org/how-to-change-style-of-scrollbar-using-tailwind-css/ */
+::-webkit-scrollbar-track {
+    @apply m-2;
+    border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    @apply bg-slate-300;
+    border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    @apply bg-slate-500;
+}
+
+body {
+    background-image: radial-gradient(#636b6f 1px, transparent 0px);
+    background-size: 40px 40px;
+}
