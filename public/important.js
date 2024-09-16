@@ -1,5 +1,5 @@
 window.onload = function() {
-    fetch('http://localhost:8000/ping', {
+    fetch('https://ping.nynxz.com/', {
         method: 'GET',
     })
     .then(response => {

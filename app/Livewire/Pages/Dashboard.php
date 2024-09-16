@@ -7,6 +7,7 @@ use App\Models\Course;
 use App\Models\User;
 use Auth;
 use Illuminate\Support\Facades\Gate;
+use Livewire\Attributes\Reactive;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use function dd;
@@ -16,28 +17,43 @@ use function view;
 class Dashboard extends Component
 {
     public $selected = null;
+
+    public $selectedAssessment;
+
     public function render()
     {
-        if(Gate::check('teacher')){
+        if (Gate::check('teacher')) {
             $courses = Course::all();
-
-            return view('livewire.pages.teacher-dashboard')->with(["courses"=>$courses, "selected"=>$this->selected, "students" => User::students()->get()]);
+            return view('livewire.pages.teacher-dashboard')->with(["courses" => $courses, "selected" => $this->selected, "students" => User::students()->get()]);
         } else {
             return view('livewire.pages.dashboard')->with(["students" => User::students()->get(), "selected" => TestButton::class]);
         }
     }
 
-    public function test(){
+    public function test()
+    {
         dd("Yes");
     }
 
-    public function select($id){
+    public function select($id)
+    {
         $this->selected = Course::find($id);
     }
 
-    public function addTeacher(){
-        if(Gate::check('teacher') && $this->selected){
+    public function selectAssessment($assessment)
+    {
+        $this->selectedAssessment = $assessment;
+    }
+
+    public function addTeacher()
+    {
+        if (Gate::check('teacher') && $this->selected) {
             $this->selected->addTeacher(Auth::user());
         }
+    }
+
+    public function refreshCourse()
+    {
+        $this->selected->refresh();
     }
 }

@@ -18,8 +18,7 @@ class NewAssessmentForm extends Component
     public $assessment;
 
 
-
-    #[Validate('string|required', message: "Title is required")]
+    #[Validate('string|required|max:20', message: "Title is required")]
     public $title;
     #[Validate('string|required', message: "Instructions is required")]
     public $instructions;
@@ -46,6 +45,6 @@ class NewAssessmentForm extends Component
             'type' => 'student',
             'minimum_grade' => 50
         ]);
-        $this->assessments = Assessment::where('course_id', $this->course->id)->get();
+        $this->dispatch('submitted');
     }
 }

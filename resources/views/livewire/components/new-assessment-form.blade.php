@@ -1,14 +1,6 @@
-<div class="w-full h-full">
-    <ul class="overflow-y-scroll h-full">
-        @foreach($assessments as $assessment)
-            <li>
-                {{$assessment}}
-            </li>
-        @endforeach
-    </ul>
-
-    <form wire:submit="newAssessment"
-          class="flex flex-row  pt-8 gap-2 rounded-md text-2xl font-bold h-min text-black w-full flex-grow">
+<div class=" p-2 pt-2 rounded-md ">
+<div class=" p-2 overflow-clip">
+    <form wire:submit="newAssessment" class=" pt-8 gap-2 rounded-md text-2xl font-bold h-min text-black w-full flex-grow">
         <div class="flex flex-col gap-2 flex-grow p-4">
             <input type="text" wire:model="title" name="title" for="title" class=" rounded-md min-w-0 w-full"
                    placeholder="Title">
@@ -46,3 +38,5 @@
         </div>
     </form>
 </div>
+</div>
+
