@@ -101,6 +101,18 @@
                 {{-- HOVER RING--}}
                 <div class="absolute w-full h-full top-0 left-0 rounded-md group-hover/a:animate-pulse group-hover/a:ring-2 group-hover/a:ring-blue-500 pointer-events-none"></div>
             </div>
+{{-- SELECTED COURSE STUDENT LIST --}}
+            <div class="col-span-1 row-span-3 flex flex-col border-[1px] border-gray-600 rounded-md  group/a bg-transparent backdrop-blur-[2px] bg-opacity-15">
+                <div class="p-2 rounded-md text-xl md:text-md flex flex-row gap-2">
+                    Name: <input type="text" name="name" id="name" class="w-full rounded-md text-black" wire:model.live.debounce.150ms="name_search">
+                </div>
+                <hr class="border-gray-600">
+                <div class=" m-2 p-2 max-h-fit overflow-y-scroll overflow-x-clip">
+                    <livewire:components.student-adder :name_search="$name_search"/>
+                </div>
+                {{-- HOVER RING--}}
+                <div class="absolute w-full h-full top-0 left-0 rounded-md group-hover/a:animate-pulse group-hover/a:ring-2 group-hover/a:ring-blue-500 pointer-events-none"></div>
+            </div>
         </div>
     </div>
 </div>

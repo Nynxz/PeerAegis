@@ -20,11 +20,17 @@ class Dashboard extends Component
 
     public $selectedAssessment;
 
+    public $name_search;
     public function render()
     {
         if (Gate::check('teacher')) {
             $courses = Course::all();
-            return view('livewire.pages.teacher-dashboard')->with(["courses" => $courses, "selected" => $this->selected, "students" => User::students()->get()]);
+            return view('livewire.pages.teacher-dashboard')->with([
+                "courses" => $courses,
+                "selected" => $this->selected,
+                "students" => User::students()->get(),
+                "name_search" => $this->name_search,
+            ]);
         } else {
             return view('livewire.pages.dashboard')->with(["students" => User::students()->get(), "selected" => TestButton::class]);
         }
