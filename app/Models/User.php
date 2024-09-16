@@ -15,6 +15,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         's_number',
+        'email',
         'password',
         'role',
     ];
@@ -28,5 +29,15 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class, 'teachers_courses');
+    }
+
+    public function scopeStudents($query)
+    {
+        return $query->where('role', 'student');
     }
 }

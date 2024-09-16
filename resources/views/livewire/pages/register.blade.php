@@ -1,3 +1,3 @@
 <div class="flex flex-grow w-full flex-row">
-    <livewire:login-form/>
+    <livewire:components.register-form/>
 </div>

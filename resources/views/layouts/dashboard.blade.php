@@ -10,7 +10,7 @@
     <title>{{ $title ?? 'Reviews' }}</title>
     <livewire:components.navbar/>
 </head>
-<body class="bg-secondary flex flex-grow h-screen flex-col bg-red-500 w-screen">
+<body class="bg-secondary flex flex-grow h-screen flex-col w-screen">
 {{ $slot }}
 </body>
 </html>

@@ -10,6 +10,6 @@ class Register extends Component
 {
     public function render()
     {
-        return view('livewire.pages.login');
+        return view('livewire.pages.register');
     }
 }

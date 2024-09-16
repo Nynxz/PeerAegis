@@ -2,8 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Assessment;
+use App\Models\Course;
 use App\Models\User;
 use App\Models\Teacher;
+use Database\Factories\AssessmentFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -38,5 +41,10 @@ class DatabaseSeeder extends Seeder
             'password' => 'password',
             'role' => 'teacher'
         ]);
+
+
+        Course::factory()->count(12)->create();
+        Assessment::factory()->count(12)->create();
+
     }
 }

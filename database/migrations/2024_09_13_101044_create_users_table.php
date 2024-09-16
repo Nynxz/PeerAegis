@@ -12,7 +12,7 @@ return new class extends Migration {
             $table->string('name');
             $table->string('email');
             $table->string('password');
-            $table->string('s_number');
+            $table->string('s_number')->unique()->index();
             $table->enum('role', ['student', 'teacher'])->nullable()->default('student');
             $table->timestamps();
         });
