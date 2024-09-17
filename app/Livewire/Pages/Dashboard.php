@@ -3,6 +3,7 @@
 namespace App\Livewire\Pages;
 
 use App\Livewire\Components\TestButton;
+use App\Models\Assessment;
 use App\Models\Course;
 use App\Models\User;
 use Auth;
@@ -24,6 +25,7 @@ class Dashboard extends Component {
 //    STUDENT DASHBOARD
 
     public $selected_course;
+    public $selected_assessment;
 
     private function handleStudentDashboard(): View {
         $courses = Auth::user()->enrolledCourses()->get();
@@ -36,5 +38,9 @@ class Dashboard extends Component {
 
     public function selectCourse(Course $course) {
         $this->selected_course = $course;
+    }
+
+    public function selectAssessment(Assessment $assessment) {
+        $this->selected_assessment = $assessment;
     }
 }
