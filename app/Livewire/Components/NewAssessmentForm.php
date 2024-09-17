@@ -4,6 +4,7 @@ namespace App\Livewire\Components;
 
 use App\Models\Assessment;
 use App\Models\Course;
+use App\Models\Groupold;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
@@ -55,27 +56,44 @@ class NewAssessmentForm extends Component
     public function newAssessment(){
         $this->validate();
         if(Gate::allows('createAssessment', $this->course)){
+            $assessment = Assessment::create([
+                'course_id' => $this->course->id,
+                'title' => $this->title,
+                'instructions' => $this->instructions,
+                'due_date' => $this->due_date,
+                'required_reviews' => $this->required_reviews,
+                'type' => $this->assessment_type,
+                'minimum_grade' => $this->max_score,
+            ]);
 
-            if($this->assessment_type == 'teacher'){
-//                AUTO GROUP SPLIT
-                $students = Course::find($this->course->id)->students()->get()->shuffle()->toArray();
-                // if required = 1, then chunk_size = 2 >>> (you + them <3 4 eva)
-                $this->groups = array_chunk($students, $this->required_reviews+1);
-//                dd($this->groups );
+            if($this->assessment_type == 'teacher') {
+                foreach ($this->groups as $groupIndex => $groupUsers) {
+
+                    $group = Groupold::create([
+                        'name' => "Groupold ".$groupIndex+1,
+                    ]);
+
+                    $assessment->groups()->attach($group->id);
+
+                    foreach ($groupUsers as $user) {
+                        // Attach users to the group via the many-to-many relationship
+                        $group->users()->attach($user['id']);
+                    }
+                }
             }
-//            Assessment::create([
-//                'course_id' => $this->course->id,
-//                'title' => $this->title,
-//                'instructions' => $this->instructions,
-//                'due_date' => $this->due_date,
-//                'required_reviews' => $this->required_reviews,
-//                'type' => $this->assessment_type,
-//                'minimum_grade' => $this->max_score,
-//            ]);
+
             $this->dispatch('submitted');
         } else {
             $this->error = "You are not teaching this course!";
         }
+    }
+
+    public function shuffleGroups(){
+        //                AUTO GROUP SPLIT
+        $students = Course::find($this->course->id)->students()->get()->shuffle()->toArray();
+        // if required = 1, then chunk_size = 2 >>> (you + them <3 4 eva)
+        $this->groups = array_chunk($students, $this->required_reviews+1);
+//                dd($this->groups );
     }
 
     public function moveUserUp($group, $user){

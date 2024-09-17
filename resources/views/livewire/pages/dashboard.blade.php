@@ -1,3 +1,4 @@
+@php use App\Models\Assessment; @endphp
 <div class="flex flex-grow overflow-hidden max-h-screen">
     <div class="grid grid-cols-8  grid-rows-1 text-2xl font-bold text-white p-2 w-full h-full">
 {{--        SIDE BAR --}}
@@ -80,6 +81,9 @@
             <div class="col-span-2 row-span-5 flex flex-col border-[1px] m-1 border-gray-600 rounded-md group/a bg-transparent backdrop-blur-[2px] bg-opacity-15">
                 @if($selected_assessment != null)
                     <ul>
+                        @foreach($group_users as $user)
+                        <li>{{$user['name']}}</li>
+                        @endforeach
 {{--                        {{$selected_assessment}}--}}
                     </ul>
                 @endif
@@ -92,11 +96,15 @@
                 <div class="m-2 max-h-fit overflow-y-scroll overflow-x-clip">
                 @if($selected_assessment != null)
                     <ul>
-                        @foreach($selected_course->students()->get() as $student)
-                        <li>
-                            {{$student->name}}
-                        </li>
+
+                        @foreach($group_users as $user)
+                            <li>{{$user['name']}}</li>
                         @endforeach
+{{--                        @foreach($selected_course->students()->get() as $student)--}}
+{{--                        <li>--}}
+{{--                            {{$student->name}}--}}
+{{--                        </li>--}}
+{{--                        @endforeach--}}
                     </ul>
                 @endif
                 </div>

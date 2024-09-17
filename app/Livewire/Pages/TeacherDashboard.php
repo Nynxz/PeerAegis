@@ -3,6 +3,7 @@
 
 namespace App\Livewire\Pages;
 
+use App\Models\Assessment;
 use App\Models\Course;
 use App\Models\User;
 use Auth;
@@ -19,18 +20,18 @@ class TeacherDashboard extends Component {
     public $filter_courses = false;
     public $seeAllStudents = false;
 
-
+    public $courses;
     public function render() {
         return $this->Dashboard();
     }
 
     public function Dashboard(): View {
-        $courses = !$this->filter_courses ? Course::all() : Course::whereHas('teachers', function (\Illuminate\Database\Eloquent\Builder $query) {
+        $this->courses = !$this->filter_courses ? Course::all() : Course::whereHas('teachers', function (\Illuminate\Database\Eloquent\Builder $query) {
             $query->where('user_id', Auth::id());
         })->get();
 
         return view('livewire.pages.teacher-dashboard')->with([
-            "courses" => $courses,
+            "courses" => $this->courses,
             "selected" => $this->selected,
             "students" => User::students()->get(),
             "name_search" => $this->name_search,
@@ -53,6 +54,7 @@ class TeacherDashboard extends Component {
 
     public function selectAssessment($assessment)
     {
+        dd(Assessment::find($assessment['id'])->groups()->first()->users()->get());
         $this->selectedAssessment = $assessment;
     }
 
@@ -65,7 +67,13 @@ class TeacherDashboard extends Component {
 
     public function refreshCourse()
     {
-        $this->selected->refresh();
+        if($this->selected){
+            $this->selected->refresh();
+        }
+
+        $this->courses = !$this->filter_courses ? Course::all() : Course::whereHas('teachers', function (\Illuminate\Database\Eloquent\Builder $query) {
+            $query->where('user_id', Auth::id());
+        })->get();
     }
 
     public function filterCourses($set){

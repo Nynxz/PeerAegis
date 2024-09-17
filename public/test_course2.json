@@ -1,0 +1,22 @@
+{
+    "name": "T&H Studies",
+    "code": "123231TTH",
+    "students": [
+        "s_5238766",
+        "s_5238767"
+    ],
+    "teachers": [
+        "t_1",
+        "t_2"
+    ],
+    "assessments": [
+        {
+            "title": "Week 1 Peer Review",
+            "instructions": "Complete week 1 workshop, and select 3 students to peer review, try score above an average of 50!",
+            "required_reviews": 3,
+            "minimum_grade": 50,
+            "due_date": "",
+            "type": "student"
+        }
+    ]
+}

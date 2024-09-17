@@ -36,7 +36,16 @@
                 <option value="teacher">Teacher</option>
             </select>
             <div class="text-white flex flex-col ">
-                <button type="submit" class=" rounded-md mx-1 mb-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-none p-1">New Asessment</button>
+                @if($assessment_type == 'student')
+                    <button type="submit" class=" rounded-md mx-1 mb-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-none p-1">New Asessment</button>
+                @else
+                    <div class="flex flex-row justify-between">
+                    <button type="button" wire:click="shuffleGroups" class=" rounded-md mx-1 mb-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-none p-1">Shuffle</button>
+                    @if($groups != null)
+                        <button type="submit" class=" rounded-md mx-1 mb-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-none p-1">Create</button>
+                    @endif
+                    </div>
+                @endif
 
                 @error('title')
                 <ul>
@@ -72,12 +81,12 @@
             <ul class="p-2">
                 @foreach($group as $userIndex => $user)
                     <li class="pl-2 flex flex-row justify-between hover:ring-2 ring-blue-500 rounded-md" >
-                        <span>
+                        <span class="line-clamp-1 break-words overflow-hidden">
                             {{$user['name']}}
                         </span>
-                        <div class="pr-2">
-                            <button wire:click="moveUserUp({{$groupIndex}}, {{$userIndex}})">↑</button>
-                            <button wire:click="moveUserDown({{$groupIndex}}, {{$userIndex}})">↓</button>
+                        <div class="pr-1 min-w-fit">
+                            <button class="bg-slate-700 px-2 m-1 rounded-md hover:bg-slate-600" wire:click="moveUserUp({{$groupIndex}}, {{$userIndex}})">↑</button>
+                            <button class="bg-slate-700 px-2 rounded-md hover:bg-slate-600" wire:click="moveUserDown({{$groupIndex}}, {{$userIndex}})">↓</button>
                         </div>
                     </li>
                 @endforeach

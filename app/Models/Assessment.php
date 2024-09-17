@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Assessment extends Model
 {
@@ -24,6 +27,15 @@ class Assessment extends Model
     public function course(): BelongsTo
     {
         return $this->belongsTo(Course::class);
+    }
+
+    public function groups(): BelongsToMany
+    {
+        return $this->BelongsToMany(Groupold::class, 'assessments_groups');
+    }
+
+    public function students(): HasManyThrough{
+        return $this->hasManyThrough(User::class, Groupold::class, 'id', 'id', 'id', 'id' );
     }
 
     protected function casts(): array

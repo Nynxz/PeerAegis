@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Assessment;
+use App\Models\Course;
+use App\Models\User;
 use JetBrains\PhpStorm\NoReturn;
 use Validator;
 use function array_unique;
@@ -15,12 +18,12 @@ class CourseController extends Controller
 
     }
 
-    #[NoReturn] public static function parseJSONCourseFile($json_string): void  {
+    public static function parseJSONCourseFile($json_string): void  {
         $data = json_decode($json_string, true);
 
         $validator = Validator::make($data, [
             'name' => 'required|string',
-            'code' => 'required|string|unique:courses,code',
+            'code' => 'required|string',//|unique:courses,code',
             'students' => ['required', 'array'],
             'students.*' => ['regex:/^[s,S]_\d+$/'],
             'teachers' => ['required', 'array'],
@@ -29,7 +32,7 @@ class CourseController extends Controller
             'assessments.*.title' => 'required|string',
             'assessments.*.instructions' => 'required|string',
             'assessments.*.required_reviews' => 'required|integer',
-            'assessments.*.required_score' => 'required|integer',
+            'assessments.*.minimum_grade' => 'required|integer',
             'assessments.*.due_date' => 'nullable|date',
             'assessments.*.type' => ['required', 'in:student,teacher'],
         ]);
@@ -37,15 +40,28 @@ class CourseController extends Controller
         if ($validator->fails()) {
             // Handle validation failure
             $errors = $validator->errors()->all();
-            dd($errors); // Dump validation errors for debugging
+//            dd($errors); // Dump validation errors for debugging
         }
         $data = $validator->validated();
 
         $data['students'] = array_unique($data['students']);
         $data['teachers'] = array_unique($data['teachers']);
 
-        dd($data);
+        // Create the course
+        $course = Course::create(['name' => $data['name'], 'code' => $data['code']]);
 
+        // Link the teachers
+        $teacherIds = User::whereIn('s_number', $data['teachers'])->pluck('id');
+        $course->teachers()->syncWithoutDetaching($teacherIds);
 
+        $studentIds = User::whereIn('s_number', $data['students'])->pluck('id');
+        $course->students()->syncWithoutDetaching($studentIds);
+
+        // Create the assessments
+        foreach ($data['assessments'] as $assessment) {
+            $assessment['course_id'] = $course->id;
+            Assessment::create($assessment)->course()->associate($course);
+        }
+        //        $course->assessments()->createMany($data['assessments']);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -32,14 +33,18 @@ class User extends Authenticatable
         ];
     }
 
-    public function courses()
+    public function courses(): BelongsToMany
     {
         return $this->belongsToMany(Course::class, 'teachers_courses');
     }
 
-    public function enrolledCourses()
+    public function enrolledCourses(): BelongsToMany
     {
         return $this->belongsToMany(Course::class, 'students_courses');
+    }
+
+    public function groups():BelongsToMany{
+        return $this->belongsToMany(Groupold::class, 'group_user');
     }
 
     public function scopeStudents(Builder $query): void

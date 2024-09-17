@@ -28,7 +28,7 @@
                                 @endif
                             @endforeach
                         </ul>
-                        <livewire:components.course-uploader/>
+                        <livewire:components.course-uploader @uploaded="refreshCourse"/>
 
                     </div>
                 </div>
@@ -91,7 +91,7 @@
                         <li>{{ $selectedAssessment['required_reviews'] }}</li>
                         <li>{{ $selectedAssessment['type'] }}</li>
                         <li>{{ $selectedAssessment['minimum_grade'] }}</li>
-                        <li>TODO: Students Completed - Students Incomplete</li>
+                        <li>{{$selectedAssessment}}</li>
 {{--                        https://carbon.nesbot.com/docs/--}}
                     </ul>
                 @endif

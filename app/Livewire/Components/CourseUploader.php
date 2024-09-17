@@ -30,6 +30,7 @@ class CourseUploader extends Component
     {
         $contents = file_get_contents($this->courseFile->getRealPath());
         CourseController::parseJSONCourseFile($contents);
+        $this->dispatch('uploaded');
 //        $path = $this->photo->store(path: 'photos');
 //        $json = json_decode(Storage::get($path));
 //        dd($json);
