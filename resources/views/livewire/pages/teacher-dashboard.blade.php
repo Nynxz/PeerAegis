@@ -6,13 +6,17 @@
             <div class="p-2 rounded-md text-xl md:text-md">
                 Courses for {{ Auth::user()->name }}
             </div>
+            <div class="justify-between flex flex-row px-2">
+                <button wire:click="filterCourses(true)">My Courses</button>
+                <button wire:click="filterCourses(false)">All</button>
+            </div>
             <hr class="border-gray-600">
             <div class="max-h-fit overflow-y-scroll overflow-x-clip">
                 <div class="p-2 rounded-md ">
                     <ul>
                         @foreach($courses as $course)
                             <li class="px-1 flex flex-row flex-grow rounded-md mb-2 group cursor-pointer text-sm bg-purple-400"
-                                wire:click="select({{ $course->id }})">
+                                wire:click="select({{ $course->id }})" wire:key="{{$course->id}}">
                                 {{ $course->name }}
                             </li>
                         @endforeach
@@ -87,18 +91,16 @@
                 <div class="absolute w-full h-full top-0 left-0 rounded-md group-hover/a:animate-pulse group-hover/a:ring-2 group-hover/a:ring-blue-500 pointer-events-none"></div>
             </div>
 {{-- SELECTED COURSE ASESSEMENT LIST --}}
-            <div
-                class="col-span-1 row-span-2 flex flex-col border-[1px] border-gray-600 rounded-md  group/a bg-transparent backdrop-blur-[2px] bg-opacity-15">
+            <div class="col-span-1 row-span-2 flex flex-col border-[1px] border-gray-600 rounded-md  group/a bg-transparent backdrop-blur-[2px] bg-opacity-15">
                 <div class="p-2 rounded-md text-xl md:text-md">
                     Assessments: @if($selectedAssessment)
                         {{ $selectedAssessment['title'] }}
                     @endif
                 </div>
                 <hr class="border-gray-600">
-                <div class=" m-2 p-2 max-h-fit overflow-y-scroll overflow-x-clip">
                     <livewire:components.assessment-list :course="$selected"  @ss="selectAssessment($event.detail.assessment)"/>
-                </div>
                 {{-- HOVER RING--}}
+                <livewire:components.course-uploader/>
                 <div class="absolute w-full h-full top-0 left-0 rounded-md group-hover/a:animate-pulse group-hover/a:ring-2 group-hover/a:ring-blue-500 pointer-events-none"></div>
             </div>
 {{-- SELECTED COURSE STUDENT LIST --}}
@@ -107,9 +109,7 @@
                     Name: <input type="text" name="name" id="name" class="w-full rounded-md text-black" wire:model.live.debounce.150ms="name_search">
                 </div>
                 <hr class="border-gray-600">
-                <div class=" m-2 p-2 max-h-fit overflow-y-scroll overflow-x-clip">
-                    <livewire:components.student-adder :name_search="$name_search"/>
-                </div>
+                <livewire:components.student-adder :name_search="$name_search"/>
                 {{-- HOVER RING--}}
                 <div class="absolute w-full h-full top-0 left-0 rounded-md group-hover/a:animate-pulse group-hover/a:ring-2 group-hover/a:ring-blue-500 pointer-events-none"></div>
             </div>

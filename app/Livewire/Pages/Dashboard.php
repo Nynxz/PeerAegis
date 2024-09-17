@@ -21,10 +21,15 @@ class Dashboard extends Component
     public $selectedAssessment;
 
     public $name_search;
+
+    public $filter_courses = false;
     public function render()
     {
         if (Gate::check('teacher')) {
-            $courses = Course::all();
+            $courses = !$this->filter_courses ? Course::all() : Course::whereHas('teachers', function (\Illuminate\Database\Eloquent\Builder $query) {
+                $query->where('user_id', Auth::id());
+            })->get();
+
             return view('livewire.pages.teacher-dashboard')->with([
                 "courses" => $courses,
                 "selected" => $this->selected,
@@ -61,5 +66,9 @@ class Dashboard extends Component
     public function refreshCourse()
     {
         $this->selected->refresh();
+    }
+
+    public function filterCourses($set){
+        $this->filter_courses = $set;
     }
 }

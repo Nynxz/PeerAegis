@@ -1,5 +1,10 @@
 <div class=" p-2 pt-2 rounded-md ">
 <div class=" p-2 overflow-clip">
+    @if($course && Gate::allows('createAssessment', $course))
+            Can create!
+    @if($error)
+        {{$error}}
+    @endif
     <form wire:submit="newAssessment" class=" pt-8 gap-2 rounded-md text-2xl font-bold h-min text-black w-full flex-grow">
         <div class="flex flex-col gap-2 flex-grow p-4">
             <input type="text" wire:model="title" name="title" for="title" class=" rounded-md min-w-0 w-full"
@@ -37,6 +42,8 @@
             </div>
         </div>
     </form>
+    @endif
+
 </div>
 </div>
 
