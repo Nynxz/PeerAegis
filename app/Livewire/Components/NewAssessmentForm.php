@@ -19,13 +19,20 @@ class NewAssessmentForm extends Component
     #[Reactive]
     public $assessment;
 
-
     #[Validate('string|required|max:20', message: "Title is required")]
     public $title;
     #[Validate('string|required', message: "Instructions is required")]
     public $instructions;
     #[Validate('date|required', message: "Due Date is required")]
     public $due_date;
+
+    #[Validate('numeric|required', message: "Max Score is required")]
+    public $max_score = 0;
+    #[Validate('numeric|required', message: "Required Reviews is required")]
+    public $required_reviews = 0;
+
+    #[Validate('string|in:student,teacher|required', message: "Instructions is required")]
+    public $assessment_type = "student";
 
     private $error = "";
 
@@ -34,7 +41,7 @@ class NewAssessmentForm extends Component
         if($this->course){
             $assessments = Assessment::where('course_id', $this->course->id)->get();
         }
-        return view('livewire.components.new-assessment-form')->with(['course' => $this->course, 'assessments' => $assessments ?? [], 'error' => $this->error]);
+        return view('livewire.components.new-assessment-form')->with(['course' => $this->course, 'assessments' => $assessments ?? [], 'error' => $this->error, 'max_score' => $this->max_score]);
     }
 
     public function newAssessment(){
@@ -45,9 +52,9 @@ class NewAssessmentForm extends Component
                 'title' => $this->title,
                 'instructions' => $this->instructions,
                 'due_date' => $this->due_date,
-                'required_reviews' => 3,
-                'type' => 'student',
-                'minimum_grade' => 50
+                'required_reviews' => $this->required_reviews,
+                'type' => $this->assessment_type,
+                'minimum_grade' => $this->max_score,
             ]);
             $this->dispatch('submitted');
         } else {

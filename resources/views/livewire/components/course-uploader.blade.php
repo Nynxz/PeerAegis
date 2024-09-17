@@ -1,5 +1,5 @@
 <form wire:submit="save">
-    <input type="file" wire:model="photo">
+    <input type="file" wire:model="courseFile">
 
     @error('photo') <span class="error">{{ $message }}</span> @enderror
 

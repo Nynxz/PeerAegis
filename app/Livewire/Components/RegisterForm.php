@@ -2,9 +2,12 @@
 
 namespace App\Livewire\Components;
 
+use App\Http\Controllers\LoginController;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 
@@ -22,29 +25,19 @@ class RegisterForm extends Component
     #[Validate('required', message: "Password is Required")]
     public $password;
 
-    public $status = "Failed";
-
-    public function register()
+    public function register(): RedirectResponse|Redirector
     {
         $this->validate();
 
-        $credentials = [
+        return LoginController::register([
             's_number' => $this->s_number,
             'email' => $this->email,
             'name' => $this->name,
             'password' => $this->password,
-        ];
-
-        User::create($credentials);
-
-        if(Auth::attempt($credentials)){
-            return redirect('/dashboard');
-        }
-
-        return back()->withErrors(['password' => 'Invalid Student Number or Password']);
+        ]);
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.components.register-form');
     }

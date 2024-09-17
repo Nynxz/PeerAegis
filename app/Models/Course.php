@@ -25,4 +25,20 @@ class Course extends Model
         $this->teachers()->syncWithoutDetaching($teacher);
     }
 
+    public function students(){
+        return $this->belongsToMany(User::class, 'students_courses');
+    }
+
+    public function assessments(){
+        return $this->hasMany(Assessment::class, 'course_id');
+    }
+
+    public function addStudent($student){
+        $this->students()->syncWithoutDetaching($student['id']);
+    }
+
+    public function removeStudent($student){
+        $this->students()->detach($student['id']);
+    }
+
 }

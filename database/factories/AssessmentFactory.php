@@ -22,7 +22,6 @@ class AssessmentFactory extends Factory
             'minimum_grade' => rand(1, 100),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
-            'course_id' => Course::factory(),
         ];
     }
 }

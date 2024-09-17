@@ -3,6 +3,41 @@
 
 > A university peer review app.
 
+== Requirements
+
+* Must Use Laravels:
+- Migrations
+- Seeders
+- Models
+- ORM/Eloquent
+- Route
+- Controllers
+- Validator
+- View
+- Templating
+
+* 1. Two Types of Users
+- Teachers & Students
+- Students must register
+- Teachers are seeded into database
+
+* 2. All users must login to access functionality of the site
+- Users login with S number (s_xxxxx)
+- Name and Type displayed in navbar
+
+* 3. Users can logout
+
+* 4. Home Page
+- Lists all courses users is enrolled or teaching.
+- Students can enroll in multiple courses
+- Teachers can teach multiple courses
+
+* 5.
+
+
+
+
+
 == Description
 === Dependencies
 ==== Frontend
@@ -58,14 +93,12 @@ There is great potential to expand the AI component of this. Some quick ideas.
  * "from past peer reviews it appears like you may be struggling, if you require extra help here are some locations to find it X Y Z"
 
 
-==
-
 WARNING: Wolpertingers are known to nest in server racks.
 Enter at your own risk.
 
 image::docdata/image-2024-09-16-19-39-47-957.png[Yes]
 
-[IMPORTANT]
+[WARNING]
 .Feeding the Werewolves
 ====
 While werewolves are hardy community members, keep in mind the following dietary concerns:

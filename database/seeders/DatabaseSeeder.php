@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
     {
 
         User::factory()->count(25)->create();
+
         User::factory()->create([
             'name' => 'Henry Lee',
             's_number' => 's_5238766',
@@ -43,8 +44,8 @@ class DatabaseSeeder extends Seeder
         ]);
 
 
-        Course::factory()->count(12)->create();
-        Assessment::factory()->count(12)->create();
+        Course::factory()->hasAssessments(2)->count(12)->create();
+//        Assessment::factory()->count(12)->create();
 
     }
 }
