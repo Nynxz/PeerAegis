@@ -62,7 +62,31 @@
         </div>
     </form>
     @endif
-
+    @if($groups != null)
+        <ul>
+    @foreach($groups as $groupIndex => $group)
+        <li>
+            <span class="underline">
+                Group {{$groupIndex+1}}
+            </span>
+            <ul class="p-2">
+                @foreach($group as $userIndex => $user)
+                    <li class="pl-2 flex flex-row justify-between hover:ring-2 ring-blue-500 rounded-md" >
+                        <span>
+                            {{$user['name']}}
+                        </span>
+                        <div class="pr-2">
+                            <button wire:click="moveUserUp({{$groupIndex}}, {{$userIndex}})">↑</button>
+                            <button wire:click="moveUserDown({{$groupIndex}}, {{$userIndex}})">↓</button>
+                        </div>
+                    </li>
+                @endforeach
+            </ul>
+        <hr/>
+        </li>
+    @endforeach
+        </ul>
+    @endif
 </div>
 </div>
 

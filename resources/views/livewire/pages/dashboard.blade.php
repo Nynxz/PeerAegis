@@ -68,7 +68,7 @@
                 Selected Assessment
                 </span>
                 @if($selected_assessment != null)
-                    <ul class="bg-red-500 p-2">
+                    <ul class=" p-2">
                         <li>Title: {{$selected_assessment->title}} </li>
                         <li>Due: {{$selected_assessment->due_date}} </li>
                         <li>Required Review: {{$selected_assessment->required_reviews}} </li>
