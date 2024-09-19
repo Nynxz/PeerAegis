@@ -3,13 +3,13 @@
 namespace Database\Factories;
 
 use App\Models\Assessment;
-use App\Models\Groups;
+use App\Models\Group;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
 class GroupsFactory extends Factory
 {
-    protected $model = Groups::class;
+    protected $model = Group::class;
 
     public function definition(): array
     {

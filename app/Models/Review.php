@@ -10,6 +10,12 @@ class Review extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'group_id',
+        'reviewer_id',
+        'reviewee_id',
+        'content'
+    ];
     public function reviewer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'reviewer_id');
@@ -19,4 +25,14 @@ class Review extends Model
     {
         return $this->belongsTo(User::class, 'reviewee_id');
     }
+
+    public function group(): BelongsTo
+    {
+        return $this->belongsTo(Group::class, 'group_id');
+    }
+
+    public function course(){
+
+    }
+
 }

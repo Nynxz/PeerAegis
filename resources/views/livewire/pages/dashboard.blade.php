@@ -57,7 +57,6 @@
                 </div>
             <div class="absolute w-full h-full rounded-md group-hover/a:animate-pulse group-hover/a:ring-2 group-hover/a:ring-blue-500 pointer-events-none"></div>
             </div>
-
 {{--            PEER REVIEWER PANEL --}}
         </div>
 
@@ -77,8 +76,20 @@
                 @endif
                 <div class="absolute w-full h-full rounded-md group-hover/a:animate-pulse group-hover/a:ring-2 group-hover/a:ring-blue-500 pointer-events-none"></div>
             </div>
-{{--            RECIEVED PEER REVIEWS --}}
+{{--            MAIN REVIEW EDITING AREA --}}
             <div class="col-span-2 row-span-5 flex flex-col border-[1px] m-1 border-gray-600 rounded-md group/a bg-transparent backdrop-blur-[2px] bg-opacity-15">
+                <div class="border-b-2 border-gray-600 p-2">
+{{--                    Header--}}
+                Editor
+                </div>
+                @if($selected_user_type == 0 && $selected_user)
+                    <form wire:submit="send_review" class="text-black rounded-md p-1">
+                        <textarea name="review" wire:model="review_content" class="rounded-md"></textarea>
+                        <button type="submit">Send Review</button>
+                    </form>
+                @elseif($selected_user_type == 1)
+                    {{$selected_review}}
+                @endif
                 @if($selected_assessment != null)
                     <ul>
                         @foreach($group_users as $user)
@@ -89,6 +100,7 @@
                 @endif
             <div class="absolute w-full h-full rounded-md group-hover/a:animate-pulse group-hover/a:ring-2 group-hover/a:ring-blue-500 pointer-events-none"></div>
             </div>
+{{--            POTENTIAL PEER REVIEWS --}}
             <div class="col-span-1 row-span-3 flex flex-col border-[1px] m-1 border-gray-600 rounded-md group/a bg-transparent backdrop-blur-[2px] bg-opacity-15">
                    <span class="p-2 border-b-[1px] border-gray-600">
                     Potential Reviewees
@@ -97,8 +109,8 @@
                 @if($selected_assessment != null)
                     <ul>
 
-                        @foreach($group_users as $user)
-                            <li>{{$user['name']}}</li>
+                        @foreach($group_users_to_review as $user)
+                            <li  wire:click="selectUser({{$user}}, 0)">{{$user['name']}}</li>
                         @endforeach
 {{--                        @foreach($selected_course->students()->get() as $student)--}}
 {{--                        <li>--}}
@@ -119,9 +131,9 @@
 
                     @if($selected_assessment != null)
                         <ul>
-                            @foreach($selected_course->students()->get() as $student)
-                                <li>
-                                    {{$student->name}}
+                            @foreach($this->group_reviews as $review)
+                                <li wire:click="selectUser({{$review->reviewer()->first()}}, 1)">
+                                    {{$review->reviewer()->first()->name}}
                                 </li>
                             @endforeach
                         </ul>

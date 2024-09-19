@@ -4,6 +4,7 @@ namespace App\Livewire\Components;
 
 use App\Models\Assessment;
 use App\Models\Course;
+use App\Models\Group;
 use App\Models\Groupold;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -69,11 +70,10 @@ class NewAssessmentForm extends Component
             if($this->assessment_type == 'teacher') {
                 foreach ($this->groups as $groupIndex => $groupUsers) {
 
-                    $group = Groupold::create([
-                        'name' => "Groupold ".$groupIndex+1,
+                    $group = Group::create([
+                        'name' => "Group  ".$groupIndex+1,
+                        'assessment_id' => $assessment->id,
                     ]);
-
-                    $assessment->groups()->attach($group->id);
 
                     foreach ($groupUsers as $user) {
                         // Attach users to the group via the many-to-many relationship

@@ -29,9 +29,9 @@ class Assessment extends Model
         return $this->belongsTo(Course::class);
     }
 
-    public function groups(): BelongsToMany
+    public function groups(): HasMany
     {
-        return $this->BelongsToMany(Groupold::class, 'assessments_groups');
+        return $this->HasMany(Group::class, 'assessment_id');
     }
 
     public function students(): HasManyThrough{

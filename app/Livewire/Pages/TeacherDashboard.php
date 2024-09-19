@@ -26,6 +26,7 @@ class TeacherDashboard extends Component {
     }
 
     public function Dashboard(): View {
+
         $this->courses = !$this->filter_courses ? Course::all() : Course::whereHas('teachers', function (\Illuminate\Database\Eloquent\Builder $query) {
             $query->where('user_id', Auth::id());
         })->get();
@@ -47,15 +48,24 @@ class TeacherDashboard extends Component {
     {
         if($this->selected && $this->selected->id == $id){
             $this->selected = null;
+
         } else {
             $this->selected = Course::find($id);
         }
+            $this->selectedAssessment = null;
     }
 
     public function selectAssessment($assessment)
     {
-        dd(Assessment::find($assessment['id'])->groups()->first()->users()->get());
-        $this->selectedAssessment = $assessment;
+        $this->selectedAssessment = collect($assessment);
+
+        //        dd($assessment);
+//        dd(Assessment::find($assessment['id'])->groups()->first()->users()->get());
+//        dd(Assessment::find($assessment));
+//        dd($assessment);
+//             $this->selectedAssessment = Assessment::where('id', $assessment->id)->get();
+//            dd($this->selectedAssessment);
+
     }
 
     public function addTeacher()

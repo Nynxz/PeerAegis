@@ -67,7 +67,7 @@
             </div>
 {{-- NEW ASSESSMENT FORM --}}
             <div class="col-span-1 row-span-5 flex flex-col border-[1px] m-1 border-gray-600 rounded-md group/a bg-transparent backdrop-blur-[2px] bg-opacity-15" >
-                @if($selected && Gate::check('createAssessment', $selected))
+                @if($selected != null && Gate::check('createAssessment', $selected))
                 <div class="p-2 rounded-md text-xl md:text-md">
                     Selected: @if($selectedAssessment)
                         {{ $selectedAssessment['title'] }}
@@ -92,7 +92,7 @@
                         <li>{{ $selectedAssessment['type'] }}</li>
                         <li>{{ $selectedAssessment['minimum_grade'] }}</li>
                         <li>{{$selectedAssessment}}</li>
-{{--                        https://carbon.nesbot.com/docs/--}}
+{{--  https://carbon.nesbot.com/docs/--}}
                     </ul>
                 @endif
                     {{-- HOVER RING--}}

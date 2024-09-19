@@ -9,6 +9,7 @@ return new class extends Migration {
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('group_id')->constrained('groups');
             $table->foreignId('reviewer_id')->constrained('users');
             $table->foreignId('reviewee_id')->constrained('users');
             $table->string('content');
