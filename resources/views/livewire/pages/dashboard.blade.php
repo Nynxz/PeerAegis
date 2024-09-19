@@ -80,24 +80,36 @@
             <div class="col-span-2 row-span-5 flex flex-col border-[1px] m-1 border-gray-600 rounded-md group/a bg-transparent backdrop-blur-[2px] bg-opacity-15">
                 <div class="border-b-2 border-gray-600 p-2">
 {{--                    Header--}}
-                Editor
+                    @if($selected_user_type == 0 && $selected_user)
+                        {{$selected_user != null ? "Writing Review for ".$selected_user->name : 'Review Editor'}}
+                    @elseif($selected_user_type == 1)
+                        {{$selected_user != null ? "Viewing ".$selected_user->name."'s Review of You": 'Review Editor'}}
+                    @else
+                        Select a Review
+                    @endif
                 </div>
+                <div class="flex flex-grow  flex-col rounded-b-md overflow-y-scroll pl-3">
+
                 @if($selected_user_type == 0 && $selected_user)
-                    <form wire:submit="send_review" class="text-black rounded-md p-1">
-                        <textarea name="review" wire:model="review_content" class="rounded-md"></textarea>
-                        <button type="submit">Send Review</button>
+                    <form wire:submit="send_review" class="text-black rounded-md p-1 w-full text-white">
+                        <label>Review</label>
+                        <textarea name="review" wire:model="review_content" class="w-full rounded-md h-[25vh] text-black" ></textarea>
+                        <button type="submit" class="rounded-md border-2 border-gray-600 p-2 hover:border-blue-500 ">Send Review</button>
+                        <button type="button" class="rounded-md border-2 border-gray-600 p-2 hover:border-blue-500">Generate</button>
                     </form>
-                @elseif($selected_user_type == 1)
+
+                <div class="flex flex-grow flex-col bg-opacity-25 mb-2 rounded-md border-gray-600 border-2">
+                    <div class="border-b-2 border-gray-600 w-full p-2">
+                    AI Helper
+                    </div>
+                    <div class="p-2  h-full rounded-b-md min-h-40">
+                        {{$http_message}}
+                    </div>
+                </div>
+                    @elseif($selected_user_type == 1)
                     {{$selected_review}}
                 @endif
-                @if($selected_assessment != null)
-                    <ul>
-                        @foreach($group_users as $user)
-                        <li>{{$user['name']}}</li>
-                        @endforeach
-{{--                        {{$selected_assessment}}--}}
-                    </ul>
-                @endif
+                </div>
             <div class="absolute w-full h-full rounded-md group-hover/a:animate-pulse group-hover/a:ring-2 group-hover/a:ring-blue-500 pointer-events-none"></div>
             </div>
 {{--            POTENTIAL PEER REVIEWS --}}
@@ -107,10 +119,10 @@
                 </span>
                 <div class="m-2 max-h-fit overflow-y-scroll overflow-x-clip">
                 @if($selected_assessment != null)
-                    <ul>
+                    <ul class="">
 
                         @foreach($group_users_to_review as $user)
-                            <li  wire:click="selectUser({{$user}}, 0)">{{$user['name']}}</li>
+                            <li  wire:click="selectUser({{$user}}, 0)" class="m-2 pl-1 rounded-md cursor-pointer hover:bg-white hover:bg-opacity-25 {{$selected_user_type == 0 && $selected_user != null && $user->id == $selected_user->id ? "ring-2 ring-blue-500" : ''}}">{{$user['name']}}</li>
                         @endforeach
 {{--                        @foreach($selected_course->students()->get() as $student)--}}
 {{--                        <li>--}}
@@ -132,7 +144,7 @@
                     @if($selected_assessment != null)
                         <ul>
                             @foreach($this->group_reviews as $review)
-                                <li wire:click="selectUser({{$review->reviewer()->first()}}, 1)">
+                                <li wire:click="selectUser({{$review->reviewer()->first()}}, 1)" class="m-2 pl-1 rounded-md cursor-pointer hover:bg-white hover:bg-opacity-25 {{$selected_user_type == 1 && $selected_user != null && $user->id == $selected_user->id ? "ring-2 ring-blue-500" : ''}}">
                                     {{$review->reviewer()->first()->name}}
                                 </li>
                             @endforeach

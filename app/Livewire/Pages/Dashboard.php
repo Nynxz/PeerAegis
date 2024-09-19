@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Pages;
 
+use App\Http\Controllers\UsefulnessAI;
 use App\Livewire\Components\TestButton;
 use App\Models\Assessment;
 use App\Models\Course;
@@ -9,12 +10,15 @@ use App\Models\Review;
 use App\Models\User;
 use Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Http;
 use Illuminate\View\View;
 use Livewire\Attributes\Reactive;
 use Livewire\Attributes\Title;
 use Livewire\Component;
+use Validator;
 use function dd;
 use function in_array;
+use function json_decode;
 use function view;
 
 #[Title('Dashboard')]
@@ -41,6 +45,8 @@ class Dashboard extends Component {
 
 
     public $review_content;
+
+    public $http_message;
 
     private function handleStudentDashboard(): View {
         $courses = Auth::user()->enrolledCourses()->get();
@@ -109,9 +115,17 @@ class Dashboard extends Component {
             "reviewee_id" => $this->selected_user->id,
             "content" => $this->review_content
         ];
-        $review = Review::create($form);
 //        dd($review);
         $this->selectAssessment($this->selected_assessment);
-//        dd($form);
+
+        $this->http_message = UsefulnessAI::prompt($form);
+        $form = [
+            "reviewer_id" => Auth::user()->id,
+            "group_id" => $this->user_assessment_group->id,
+            "reviewee_id" => $this->selected_user->id,
+            "content" => "Review: ".$this->review_content."\nAI:".$this->http_message
+        ];
+
+        $review = Review::create($form);
     }
 }
