@@ -7,7 +7,7 @@ use App\Models\Group;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Carbon;
 
-class GroupsFactory extends Factory
+class GroupFactory extends Factory
 {
     protected $model = Group::class;
 
@@ -17,7 +17,6 @@ class GroupsFactory extends Factory
             'name' => $this->faker->name(),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
-
             'assessment_id' => Assessment::factory(),
         ];
     }

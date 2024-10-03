@@ -68,7 +68,6 @@ class Dashboard extends Component {
         $this->selected_assessment = $assessment;
         if($assessment->type == 'teacher'){
 
-
             $this->user_assessment_group = $selected_assessment_group = Auth::user()->groups->firstWhere('assessment_id', $assessment->id);
             $selected_assessment_group->assessment()->first(); // Selected Group's Assessment
             $this->group_reviews = $selected_assessment_group->reviews()->whereRevieweeId(Auth::id())->get();//Received Reviews
@@ -92,8 +91,14 @@ class Dashboard extends Component {
 //            ]);
 
         } else {
-//            $this->group_users =
+            $selected_assessment_group = Auth::user()->groups->firstWhere('assessment_id', $assessment->id);
+            $this->user_assessment_group = $selected_assessment_group = Auth::user()->groups->firstWhere('assessment_id', $assessment->id);
             $this->group_users = $assessment->course()->first()->students()->get()->toArray();
+            $this->group_reviews = $selected_assessment_group->reviews()->whereRevieweeId(Auth::id())->get();
+            $reviewed_user_ids = $selected_assessment_group->reviews()->whereReviewerId(Auth::id())->pluck('reviewee_id')->toArray(); //Created Reviews User Id
+            $this->group_users_to_review = $selected_assessment_group->users()->whereNot('id', Auth::id())->get()->filter(function ($user) use ($reviewed_user_ids) {
+                return !in_array($user->id, $reviewed_user_ids);
+            });
         }
     }
     public function selectUser(User $user, int $type) {

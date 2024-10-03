@@ -65,11 +65,28 @@
 - prototyped different front end styles
 - tried different 'starter templates', found them confusing and wasnt sure if i could use them
 - couldnt get good a good dynamic ui, figured out 'livewire', figured it was built into laravel so i could use it if i was still fulfilling all the other requirements
-- tried using inertia, found it to use way too much boiler plate code, and even more files to go through
+- tried using inertia, found it to use way too much boilerplate code, and even more files to go through
+
 
 == Entity Relationship Diagram
 
-- insert ERD here :) explain a little bit
+- Yellow: Core Tables
+- Purple: Associative? Tables
+
+
+
+image::docdata/image-2024-09-19-13-37-01-125.png[]
+
+=== Difference between Teacher Assigned vs Student Assigned "Assessments"
+==== Teacher Assigned
+* Allows for a teacher to specify how many reviews are required per student
+* Before submission, the form 'shuffles' all the students into 'groups' of n+1 where n is the required amount of reviews
+* +1 due to including themselves. eg: 2 Required Reviews (Alice -> Reviews (Bob, Charlie) ) = Group of 3
+
+==== Student Assigned
+* Creates a 'group' of all the students
+* Students then can select the assessment and see all of their peers they can review (filtering out students the user has already review)
+* And can view all of their received reviews
 
 == Useful Reviews
 

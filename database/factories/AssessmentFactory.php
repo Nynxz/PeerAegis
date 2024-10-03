@@ -18,7 +18,7 @@ class AssessmentFactory extends Factory
             'instructions' => $this->faker->word(),
             'due_date' => Carbon::now(),
             'required_reviews' => rand(1, 10),
-            'type' => array('student', 'teacher')[rand(0, 1)],
+            'type' => 'student',
             'minimum_grade' => rand(1, 100),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),

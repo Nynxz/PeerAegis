@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Assessment;
 use App\Models\Course;
+use App\Models\Group;
 use App\Models\User;
 use JetBrains\PhpStorm\NoReturn;
 use Validator;
@@ -60,7 +61,11 @@ class CourseController extends Controller
         // Create the assessments
         foreach ($data['assessments'] as $assessment) {
             $assessment['course_id'] = $course->id;
-            Assessment::create($assessment)->course()->associate($course);
+            $db_assessment = Assessment::create($assessment);
+            $db_assessment->course()->associate($course);
+            $group = Group::create(['assessment_id' => $db_assessment->id, 'name' => $db_assessment->name." Group"]);
+            $group->users()->attach($studentIds);
+            $group->assessment()->associate($db_assessment);
         }
         //        $course->assessments()->createMany($data['assessments']);
     }

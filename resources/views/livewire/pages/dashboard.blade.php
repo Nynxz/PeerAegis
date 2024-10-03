@@ -91,7 +91,7 @@
                 <div class="flex flex-grow  flex-col rounded-b-md overflow-y-scroll pl-3">
 
                 @if($selected_user_type == 0 && $selected_user)
-                    <form wire:submit="send_review" class="text-black rounded-md p-1 w-full text-white">
+                    <form wire:submit="send_review" class="rounded-md p-1 w-full text-white">
                         <label>Review</label>
                         <textarea name="review" wire:model="review_content" class="w-full rounded-md h-[25vh] text-black" ></textarea>
                         <button type="submit" class="rounded-md border-2 border-gray-600 p-2 hover:border-blue-500 ">Send Review</button>
@@ -103,6 +103,7 @@
                     AI Helper
                     </div>
                     <div class="p-2  h-full rounded-b-md min-h-40">
+                        <div>Usefulness: 0</div>
                         {{$http_message}}
                     </div>
                 </div>
@@ -120,7 +121,6 @@
                 <div class="m-2 max-h-fit overflow-y-scroll overflow-x-clip">
                 @if($selected_assessment != null)
                     <ul class="">
-
                         @foreach($group_users_to_review as $user)
                             <li  wire:click="selectUser({{$user}}, 0)" class="m-2 pl-1 rounded-md cursor-pointer hover:bg-white hover:bg-opacity-25 {{$selected_user_type == 0 && $selected_user != null && $user->id == $selected_user->id ? "ring-2 ring-blue-500" : ''}}">{{$user['name']}}</li>
                         @endforeach

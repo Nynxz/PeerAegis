@@ -35,7 +35,7 @@ class Assessment extends Model
     }
 
     public function students(): HasManyThrough{
-        return $this->hasManyThrough(User::class, Groupold::class, 'id', 'id', 'id', 'id' );
+        return $this->hasManyThrough(User::class, Group::class, 'id', 'id', 'id', 'id' );
     }
 
     protected function casts(): array

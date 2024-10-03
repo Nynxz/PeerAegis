@@ -80,6 +80,15 @@ class NewAssessmentForm extends Component
                         $group->users()->attach($user['id']);
                     }
                 }
+            } else {
+                $group = Group::create([
+                    'name' => "Assessment Group: ".$this->title,
+                    'assessment_id' => $assessment->id,
+                ]);
+                foreach ($this->course->students()->get() as $user) {
+                    // Attach users to the group via the many-to-many relationship
+                    $group->users()->attach($user['id']);
+                }
             }
 
             $this->dispatch('submitted');
