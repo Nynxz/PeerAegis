@@ -19,30 +19,10 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-//        Schema::create('groups', function (Blueprint $table) {
-//            $table->id();
-//            $table->string('name');
-//            $table->timestamps();
-//        });
-//
-//        Schema::create('assessments_groups', function (Blueprint $table) {
-//            $table->id();
-//            $table->foreignId('assessment_id')->constrained('assessments');
-//            $table->foreignId('group_id')->constrained('groups');
-//        });
-//
-//        Schema::create('group_user', function (Blueprint $table) {
-//            $table->id();
-//            $table->foreignId('group_id')->constrained('groups');
-//            $table->foreignId('user_id')->constrained('users');
-//        });
     }
 
     public function down(): void
     {
         Schema::dropIfExists('assessments');
-//        Schema::dropIfExists('groups');
-//        Schema::dropIfExists('assessments_groups');
-//        Schema::dropIfExists('group_user');
     }
 };

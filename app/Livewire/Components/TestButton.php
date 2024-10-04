@@ -51,13 +51,6 @@ class TestButton extends Component
         // Log the user out and regenerate the session
         Auth::logout();
         redirect('/');
-        return;
-//        $this->count--;
-//        Auth::logout();
-//        redirect('/');
-//
-//        $this->user = Auth::user();
-//        dd($this->user);
     }
 
     public function info()
