@@ -59,13 +59,6 @@ class TeacherDashboard extends Component {
     {
         $this->selectedAssessment = collect($assessment);
 
-        //        dd($assessment);
-//        dd(Assessment::find($assessment['id'])->groups()->first()->users()->get());
-//        dd(Assessment::find($assessment));
-//        dd($assessment);
-//             $this->selectedAssessment = Assessment::where('id', $assessment->id)->get();
-//            dd($this->selectedAssessment);
-
     }
 
     public function addTeacher()

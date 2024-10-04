@@ -14,9 +14,6 @@ class Index extends Component
 
     public function render()
     {
-        $students = User::all();
-//        return view('livewire.index')->layout('components.layouts.dashboard')
-////            ->with('students', $students);
          return view('livewire.pages.index');
     }
 }

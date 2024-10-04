@@ -102,7 +102,6 @@ class NewAssessmentForm extends Component
         $students = Course::find($this->course->id)->students()->get()->shuffle()->toArray();
         // if required = 1, then chunk_size = 2 >>> (you + them <3 4 eva)
         $this->groups = array_chunk($students, $this->required_reviews+1);
-//                dd($this->groups );
     }
 
     public function moveUserUp($group, $user){
@@ -111,7 +110,6 @@ class NewAssessmentForm extends Component
         if(count($this->groups[$group]) == 0){
             unset($this->groups[$group]);
         }
-//        dd($this->groups[$group][$user]);
     }
 
     public function moveUserDown($group, $user){
@@ -123,6 +121,5 @@ class NewAssessmentForm extends Component
         if(count($this->groups[$group]) == 0){
             unset($this->groups[$group]);
         }
-//        dd($this->groups[$group][$user]);
     }
 }

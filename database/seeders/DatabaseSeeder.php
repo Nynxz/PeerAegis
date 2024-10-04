@@ -34,8 +34,6 @@ class DatabaseSeeder extends Seeder
             'password' => 'password'
         ]);
 
-
-
         $teacher1 = User::factory()->create([
             'name' => 'Teacher 1',
             's_number' => 't_1',

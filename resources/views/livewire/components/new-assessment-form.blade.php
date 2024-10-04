@@ -12,10 +12,12 @@
             <textarea type="text" wire:model="instructions" name="instructions" for="instructions"
                    class=" rounded-md mx-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-none p-1"
                       placeholder="Instructions"></textarea>
+            <label class="text-white">Due Date</label>
             <input type="datetime-local" wire:model="due_date" name="due_date" for="due_date"
                    class="rounded-md mx-1 min-w-0 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-none p-1"
                    placeholder="Date">
 
+            <label class="text-white">Max Score</label>
             <div class="flex flex-grow flex-row">
                 <input type="range" min="1" max="100"
                        value="50" class="flex-grow rounded-md mx-1 min-w-0  p-1" id="max_score"
@@ -25,11 +27,14 @@
                 </span>
             </div>
 
+            <label class="text-white">Required Reviews</label>
             <input type="number" name="required_reviews" for="required_reviews"
                    class="  rounded-md mx-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-none p-1"
                    placeholder="Required Reviews" min="1"
                    wire:model="required_reviews"
             >
+
+            <label class="text-white">Assessment Type</label>
             <select class="rounded-md mx-1 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-none p-1"
             wire:model.live="assessment_type">
                 <option value="student">Student</option>

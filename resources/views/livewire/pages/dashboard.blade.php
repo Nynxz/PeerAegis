@@ -95,7 +95,10 @@
                         <label>Review</label>
                         <textarea name="review" wire:model="review_content" class="w-full rounded-md h-[25vh] text-black" ></textarea>
                         <button type="submit" class="rounded-md border-2 border-gray-600 p-2 hover:border-blue-500 ">Send Review</button>
-                        <button type="button" class="rounded-md border-2 border-gray-600 p-2 hover:border-blue-500">Generate</button>
+                        <button type="button" wire:click="generateAIResponse" wire:loading.remove class="rounded-md border-2 border-gray-600 p-2 hover:border-blue-500">AI Feedback</button>
+                        <div wire:loading>
+                            Generating AI Response...
+                        </div>
                     </form>
 
                 <div class="flex flex-grow flex-col bg-opacity-25 mb-2 rounded-md border-gray-600 border-2">
@@ -103,7 +106,7 @@
                     AI Helper
                     </div>
                     <div class="p-2  h-full rounded-b-md min-h-40">
-                        <div>Usefulness: 0</div>
+{{--                        <div>Usefulness: 0</div>--}}
                         {{$http_message}}
                     </div>
                 </div>
